@@ -1,0 +1,2 @@
+[test]
+ansible.test ansible_host=192.168.35.65 ansible_user=sam

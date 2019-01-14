@@ -1,0 +1,14 @@
+---
+- name: Copy phpinfo file
+  hosts: test
+  
+  vars: 
+    source_file: pi.php
+    dest_folder: /var/www/html/
+
+  tasks:
+  - name: Copy php file
+    copy: src={{ source_file  }} dest={{ dest_folder  }} mode=0644 owner=www-data group=www-data
+
+
+...

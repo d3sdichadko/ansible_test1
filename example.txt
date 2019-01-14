@@ -1,0 +1,12 @@
+mkdir roles
+ansible-galaxy init deploy_apache_web
+
+
+=====
+task1:
++ a) установить apache2, postgresql, python
++/- b) Web : скопировать файлы сайта, проверить работу
+c) использовать темплейты
+
+d) PostgreSQL : создать БД, юзера с ролью, привилегии
+e) Попробовать использовать плейбуки/роли для CentOS и Debian/Ubuntu

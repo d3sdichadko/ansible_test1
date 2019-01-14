@@ -1,0 +1,20 @@
+---
+- name: Install software
+  hosts: test
+  become: yes
+
+  tasks:
+  - name: Install Apache2 web server
+    apt: name=apache2 state=latest
+#    service: name=apache2 state=started enabled=yes
+
+
+  - name: Install PostgreSQL database server
+    apt: name=postgresql state=latest
+#    service: name=postgresql state=started enabled=yes
+
+  - name: Install python
+    apt: name=python state=latest
+
+
+...
