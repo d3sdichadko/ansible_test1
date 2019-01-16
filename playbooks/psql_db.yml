@@ -1,0 +1,13 @@
+---
+- name: Create PostgreSQL DB
+  hosts: test
+  become: yes
+  become_method: sudo
+  become_user: postgres
+  #become_flags: "-u"
+
+  tasks:
+  - name: Create PostgreSQL DB
+    postgresql_db: 
+       name: testdb13 # owner=tuser11 login_user=postgres login_host=127.0.0.1
+...

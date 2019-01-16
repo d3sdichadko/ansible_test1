@@ -1,0 +1,9 @@
+---
+- name: Install software
+  hosts: test
+  become: yes
+
+  tasks:
+  - name: Install python-psycopg2 package
+    apt: name=python-psycopg2 state=installed
+...

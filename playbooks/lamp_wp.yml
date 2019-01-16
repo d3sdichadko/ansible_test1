@@ -1,0 +1,55 @@
+# Setup LAMP and install Wordpress with 3 users
+---
+- name: Setup LAMP
+  hosts: test
+  become: yes
+
+  vars:
+#    dest_folder=/var/www/html
+    userdbpass: 234567890
+
+  tasks:
+  - name: Stop Apache
+    service: name=apache2 state=stopped
+
+  - name: Install Nginx
+    apt: name=nginx state=installed
+
+#  - name: Copy conf files
+#    copy: src={{ files }} dest=/etc/nginx/conf.d/wp.conf
+
+#  - name: Reload Nginx
+#    service: name=nginx state=reloaded
+  - name: -= Install PYTHON MySQL deps =-
+    apt: name=python-pymysql,python-mysqldb state=installed
+
+  - name: -= Install PYTHON 3 MySQL deps =-
+    apt: name=python3-pymysql,python3-mysqldb state=installed
+ 
+  - name: Install MySQL server
+    apt: name=mysql-server state=installed
+
+  - name: Start MySQL server
+    service: name=mysql state=started
+
+  - name: Install MySQL client
+    apt: name=mysql-client state=installed
+
+  - name: Create a new DB
+    mysql_db: name=wp_db1 state=present
+
+  - name: Create a new DB user
+    mysql_user: name=wp_user1 password={{ userdbpass }} priv='*.*:ALL' state=present
+
+# Apache ?
+#  - name: Download Wordpress
+#    get_url: url=https://wordpress.org/latest.tar.gz dest={{ dest_folder }}
+
+#  - name: Extract WP files from archive
+#    shell: tar -xzf {{ dest_folder }}/latest.tar.gz -C {{ dest_folder }}
+
+#  - name: Change WP config
+#   use Jinja templates
+
+
+...
