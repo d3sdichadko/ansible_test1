@@ -1,0 +1,7 @@
+---
+# vars file for setup_lamp
+dest_folder: /var/www/html
+dbname: wp_db1
+dbuser: wp_user1
+userdbpass: 234567890
+mysql_root_password: qazwsx213

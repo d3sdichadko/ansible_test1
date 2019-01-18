@@ -1,0 +1,15 @@
+# Setup LAMP and install Wordpress with 3 users
+---
+- name: Setup LAMP
+  hosts: test
+  become: yes
+
+  roles: 
+    - { role: setup_lamp, when: ansible_system == "Linux" }
+
+
+#  - name: Change WP config
+#   use Jinja templates
+
+
+...

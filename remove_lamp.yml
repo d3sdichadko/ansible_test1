@@ -1,0 +1,7 @@
+---
+- name: Remove LAMP
+  hosts: test
+  become: true
+
+  roles: 
+    - { role: remove_lamp, when: ansible_system == "Linux" }

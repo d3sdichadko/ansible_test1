@@ -1,0 +1,63 @@
+---
+# tasks file for setup_lamp
+- name: -= Install PYTHON MySQL deps =-
+  apt: name=python-pymysql,python-mysqldb state=installed
+
+- name: -= Install PYTHON 3 MySQL deps =-
+  apt: name=python3-pymysql,python3-mysqldb state=installed
+
+### Install MySQL
+- name: Install MySQL server
+  apt: name=mysql-server state=installed
+
+# - name: Start MySQL server
+#  service: name=mysql state=started
+
+### MySQL my.cnf
+- name: Copy own MySQL my.cnf config file
+  copy: src=my.cnf dest=/etc/mysql/my.cnf
+
+- name: Restart MySQL server
+  service: name=mysql state=restarted
+
+### MySQL Secure Installation
+
+- name: Sets the root password
+  mysql_user: user=root password="{{ mysql_root_password }}" host=localhost
+
+- name: Deletes anonymous MySQL server user for ansible_fqdn
+  mysql_user: user="" host="{{ ansible_fqdn }}" state="absent"
+
+- name: Deletes anonymous MySQL server user for localhost
+  mysql_user: user="" state="absent"
+
+- name: Secures the MySQL root user for IPV6 localhost (::1)
+  mysql_user: user="root" password="{{ mysql_root_password }}" host="::1"
+
+- name: Secures the MySQL root user for IPV4 localhost (127.0.0.1)
+  mysql_user: user="root" password="{{ mysql_root_password }}" host="127.0.0.1"
+
+- name: Secures the MySQL root user for localhost domain (localhost)
+  mysql_user: user="root" password="{{ mysql_root_password }}" host="localhost"
+
+- name: Secures the MySQL root user for server_hostname domain
+  mysql_user: user="root" password="{{ mysql_root_password }}" host="{{ ansible_fqdn }}"
+
+- name: Removes the MySQL test database
+  mysql_db: db=test state=absent
+
+- name: Install MySQL client
+  apt: name=mysql-client state=installed
+
+- name: Create a new DB
+  mysql_db: name="{{ dbname }}" state=present
+
+- name: Create a new DB user
+  mysql_user: name="{{ dbuser }}" password="{{ userdbpass }}" priv='*.*:ALL' state=present
+
+# Apache ?
+- name: Check/install Apache2
+  apt: name=apache2 state=installed
+
+- name: Check Apache2 running
+  service: name=apache2 state=started
